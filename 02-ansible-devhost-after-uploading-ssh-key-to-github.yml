@@ -5,9 +5,6 @@
 
   tasks:
 
-  - name: Create destination directory
-    file: state=directory  name=bbs-jekyll-blog
-
   - name: Unzip Github ~/bbs-jekyll-blog archive
     unarchive:  copy=no  src=https://github.com/keithrbennett/bbs-jekyll-blog/archive/master.zip  dest=/root
 
@@ -21,4 +18,12 @@
     apt:  name=build-essential,make  state=latest
 
   - name: Install Jekyll only if not yet installed
-    gem: name=jekyll  state=latest
+    shell: gem install jekyll
+    args:
+      creates: /usr/local/bin/jekyll
+
+#  - name: Install Jekyll only if not yet installed
+#    shell: gem list | grep \"jekyll \" > /dev/null || gem install jekyll
+#    shell: bash -lc "(gem list | grep \"jekyll \" > /dev/null || gem install jekyll)"
+
+#    gem: name=jekyll  state=latest
