@@ -1,0 +1,24 @@
+---
+- hosts: jekyll-hosts
+  vars:
+  remote_user: root
+
+  tasks:
+
+  - name: Create destination directory
+    file: state=directory  name=bbs-jekyll-blog
+
+  - name: Unzip Github ~/bbs-jekyll-blog archive
+    unarchive:  copy=no  src=https://github.com/keithrbennett/bbs-jekyll-blog/archive/master.zip  dest=/root
+
+  - name: Add Brightbox Ubuntu repository
+    apt_repository: repo=ppa:brightbox/ruby-ng
+
+  - name: Install Ruby
+    apt: update_cache=yes  name=ruby2.3,ruby2.3-dev  state=latest
+
+  - name: Install gem build prerequisites
+    apt:  name=build-essential,make  state=latest
+
+  - name: Install Jekyll only if not yet installed
+    gem: name=jekyll  state=latest

@@ -1,0 +1,23 @@
+---
+- hosts: jekyll-hosts
+  vars:
+  remote_user: root
+
+  tasks:
+
+  - name: Set time zone to UTC time
+    when: ansible_date_time.tz != 'UTC'
+    command: timedatectl set-timezone UTC
+
+  - name: Install zsh, git, curl
+    apt: name=curl,git,zip,zsh  state=latest  force=no
+
+  - name: Create dummy .zshrc file
+    file: name=~/.zshrc  state=touch
+
+  - name: Change user shell to zsh
+    user: name=root shell=/bin/zsh
+
+  - name: Create RSA keys
+    user: name=root  generate_ssh_key=yes
+
