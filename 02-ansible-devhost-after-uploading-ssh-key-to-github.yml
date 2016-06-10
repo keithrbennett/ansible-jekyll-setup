@@ -17,10 +17,18 @@
   - name: Install gem build prerequisites
     apt:  name=build-essential,make  state=latest
 
-  - name: Install Jekyll only if not yet installed
+  - name: Get Gem List
+    shell: gem list | awk '{print $1}'
+    register: gem_list
+
+  - name: Install jekyll
     shell: gem install jekyll
-    args:
-      creates: /usr/local/bin/jekyll
+    when: "'jekyll' not in gem_list.stdout_lines"
+
+#  - name: Install Jekyll only if not yet installed
+#    shell: gem install jekyll
+#    args:
+#      creates: /usr/local/bin/jekyll
 
 #  - name: Install Jekyll only if not yet installed
 #    shell: gem list | grep \"jekyll \" > /dev/null || gem install jekyll
