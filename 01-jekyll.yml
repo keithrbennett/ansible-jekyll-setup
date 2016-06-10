@@ -9,7 +9,7 @@
     when: ansible_date_time.tz != 'UTC'
     command: timedatectl set-timezone UTC
 
-  - name: Install zsh, git, curl
+  - name: Install curl, git, zip, zsh
     apt: name=curl,git,zip,zsh  state=latest  force=no
 
   - name: Create dummy .zshrc file

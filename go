@@ -1,4 +1,3 @@
-ansible-playbook 01*
-ansible-playbook 02*
+ansible-playbook 01* && ansible-playbook 02*
 
 
